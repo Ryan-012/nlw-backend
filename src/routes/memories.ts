@@ -28,6 +28,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
   })
 
   app.get('/memories/:id', async (req, res) => {
+    console.log(req.params)
     const paramsSchema = z.object({
       id: z.string().uuid(),
     })
