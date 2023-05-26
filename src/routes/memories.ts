@@ -26,21 +26,22 @@ export async function memoriesRoutes(app: FastifyInstance) {
   })
 
   app.get('/memories/:id', async (req, res) => {
-    console.log(req.params)
     const paramsSchema = z.object({
       id: z.string().uuid(),
     })
 
     const { id } = paramsSchema.parse(req.params)
 
-    const memory = await prisma.memory.findUniqueOrThrow({
+    const memory = await prisma.memory.findUnique({
       where: {
         id,
       },
     })
 
+    if (!memory) return res.callNotFound()
+
     if (!memory.isPublic && memory.userId !== req.user.sub) {
-      return res.status(401).send()
+      res.status(401).send('Unauthorized')
     }
     return memory
   })
