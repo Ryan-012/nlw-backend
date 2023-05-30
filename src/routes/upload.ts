@@ -35,7 +35,20 @@ export async function uploadRoutes(app: FastifyInstance) {
 
     const fullUrl = req.protocol.concat('://').concat(req.hostname)
     const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString()
+    console.log(fileName)
 
     return fileUrl
   })
+
+  // app.delete('/upload/:fileName', async (req, res) => {
+  //   const { fileName } = req.params
+
+  //   try {
+  //     await unlink(resolve(__dirname, '../../uploads/', fileName))
+  //     res.send('File deleted successfully')
+  //   } catch (error) {
+  //     console.error(error)
+  //     res.status(500).send('Unable to delete file')
+  //   }
+  // })
 }

@@ -40,7 +40,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
 
     if (!memory) return res.callNotFound()
 
-    if (!memory.isPublic && memory.userId !== req.user.sub) {
+    if (memory.userId !== req.user.sub) {
       res.status(401).send('Unauthorized')
     }
     return memory
@@ -94,6 +94,10 @@ export async function memoriesRoutes(app: FastifyInstance) {
         id,
       },
     })
+
+    // if (memory.coverUrl !== coverUrl) {
+    // await api.delete(`/upload/${basename(memory.coverUrl)}`)
+    // }
 
     if (memory.userId !== req.user.sub) {
       return res.status(401).send()
