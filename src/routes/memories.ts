@@ -27,7 +27,10 @@ export async function memoriesRoutes(app: FastifyInstance) {
     return memories.map((memory) => {
       return {
         ...memory,
-        excerpt: memory.content.substring(0, 50).concat('...'),
+        excerpt:
+          memory.content.length > 50
+            ? memory.content.substring(0, 50).concat('...')
+            : memory.content,
       }
     })
   })
@@ -141,6 +144,13 @@ export async function memoriesRoutes(app: FastifyInstance) {
     if (memory.userId !== req.user.sub) {
       return res.status(401).send()
     }
+
+    await prisma.like.deleteMany({
+      where: {
+        memoryId: memory.id,
+      },
+    })
+
     await prisma.memory.delete({
       where: {
         id,
