@@ -11,6 +11,13 @@ export async function memoriesRoutes(app: FastifyInstance) {
       where: {
         userId: req.user.sub,
       },
+      include: {
+        likes: {
+          include: {
+            user: true,
+          },
+        },
+      },
 
       orderBy: {
         createdAt: 'asc',
@@ -125,12 +132,6 @@ export async function memoriesRoutes(app: FastifyInstance) {
 
     const { id } = paramsSchema.parse(req.params)
 
-    await prisma.memory.findUniqueOrThrow({
-      where: {
-        id,
-      },
-    })
-
     const memory = await prisma.memory.findUniqueOrThrow({
       where: {
         id,
@@ -145,5 +146,59 @@ export async function memoriesRoutes(app: FastifyInstance) {
         id,
       },
     })
+  })
+
+  app.post('/memories/like', async (req, res) => {
+    const bodySchema = z.object({
+      memoryId: z.string().uuid(),
+      userId: z.string().uuid(),
+    })
+
+    const { memoryId, userId } = bodySchema.parse(req.body)
+
+    const like = prisma.like.create({
+      data: {
+        memoryId,
+        userId,
+      },
+    })
+
+    return like
+  })
+
+  app.delete('/memories/like/:id', async (req, res) => {
+    const paramsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const { id } = paramsSchema.parse(req.params)
+
+    await prisma.like.findUniqueOrThrow({
+      where: {
+        id,
+      },
+    })
+
+    await prisma.like.delete({
+      where: {
+        id,
+      },
+    })
+  })
+
+  app.get('/memories/like/:id', async (req, res) => {
+    const paramsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const { id } = paramsSchema.parse(req.params)
+
+    const like = await prisma.like.findMany({
+      where: {
+        memoryId: id,
+      },
+    })
+
+    return like
   })
 }
