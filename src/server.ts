@@ -7,6 +7,7 @@ import { authRoutes } from './routes/auth'
 import { memoriesRoutes } from './routes/memories'
 import { uploadRoutes } from './routes/upload'
 import { resolve } from 'node:path'
+import { UserRoutes } from './routes/user'
 const app = fastify()
 
 app.register(require('@fastify/static'), {
@@ -26,7 +27,7 @@ app.register(authRoutes)
 
 app.register(memoriesRoutes)
 app.register(uploadRoutes)
-
+app.register(UserRoutes)
 app
   .listen({
     port: 3333,
