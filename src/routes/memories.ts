@@ -76,6 +76,13 @@ export async function memoriesRoutes(app: FastifyInstance) {
         createdAt,
         userId: req.user.sub,
       },
+      include: {
+        likes: {
+          include: {
+            user: true,
+          },
+        },
+      },
     })
 
     return memory
@@ -122,6 +129,13 @@ export async function memoriesRoutes(app: FastifyInstance) {
         coverUrl,
         isPublic,
         createdAt,
+      },
+      include: {
+        likes: {
+          include: {
+            user: true,
+          },
+        },
       },
     })
 
@@ -189,7 +203,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
       },
     })
 
-    await prisma.like.delete({
+    return await prisma.like.delete({
       where: {
         id,
       },
