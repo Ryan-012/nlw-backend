@@ -42,6 +42,17 @@ export async function UserRoutes(app: FastifyInstance) {
 
     if (!user) return res.callNotFound()
 
-    return user
+    return {
+      ...user,
+      memories: user.memories.map((memory) => {
+        return {
+          ...memory,
+          excerpt:
+            memory.content.length > 50
+              ? memory.content.substring(0, 50).concat('...')
+              : memory.content,
+        }
+      }),
+    }
   })
 }
