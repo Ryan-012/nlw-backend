@@ -18,7 +18,7 @@ app.register(require('@fastify/static'), {
 app.register(multipart)
 
 app.register(cors, {
-  origin: true,
+  origin: ['https://nlw-spacetime-vert.vercel.app', 'http://localhost:3000'],
 })
 app.register(jwt, {
   secret: 'process.env.SECRET_KEY',
