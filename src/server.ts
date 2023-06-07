@@ -29,10 +29,11 @@ app.register(memoriesRoutes)
 app.register(uploadRoutes)
 app.register(UserRoutes)
 app
-  .listen({
-    port: 3333,
-    host: '0.0.0.0',
+  .listen(process.env.PORT || 3333, '0.0.0.0')
+  .then((address) => {
+    console.log(`Server listening on ${address}`)
   })
-  .then(() => {
-    console.log('Server running...')
+  .catch((err) => {
+    console.error(err)
+    process.exit(1)
   })
