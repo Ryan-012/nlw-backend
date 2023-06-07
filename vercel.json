@@ -6,9 +6,25 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "routes":  [
     {
-      "src": "(.*)",
+      "src": "/auth",
+      "dest": "src/routes/auth.ts"
+    },
+    {
+      "src": "/memories",
+      "dest": "src/routes/memories.ts"
+    },
+    {
+      "src": "/upload",
+      "dest": "src/routes/upload.ts"
+    },
+    {
+      "src": "/user",
+      "dest": "src/routes/user.ts"
+    },
+    {
+      "src": "/(.*)",
       "dest": "src/server.ts"
     }
   ]
