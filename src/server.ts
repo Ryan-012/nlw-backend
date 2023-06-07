@@ -18,7 +18,7 @@ app.register(require('@fastify/static'), {
 app.register(multipart)
 
 app.register(cors, {
-  origin: ['https://nlw-frontend-psi.vercel.app', 'http://localhost:3000'],
+  origin: '*',
 })
 app.register(jwt, {
   secret: 'process.env.SECRET_KEY',
