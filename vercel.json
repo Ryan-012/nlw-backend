@@ -22,7 +22,10 @@
     {
       "src": "/user",
       "dest": "src/routes/user.ts"
+    },
+    {
+      "src": "(.*)",
+      "dest": "src/server.ts"
     }
-   
   ]
 }
