@@ -7,7 +7,7 @@
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
     "lint": "eslint src --ext .ts --fix",
-    "build": "npx prisma generate && vercel build"
+    "vercel-build": "npx prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
