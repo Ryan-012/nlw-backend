@@ -4,11 +4,8 @@
     {
       "src": "src/server.ts",
       "use": "@vercel/node"
-    },
-    {
-      "src": "prisma/schema.prisma",
-      "use": "prisma"
     }
+   
   ],
   "routes":  [
     {
