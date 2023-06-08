@@ -1,12 +1,11 @@
 import { FastifyInstance } from 'fastify'
-import { randomUUID } from 'node:crypto'
-import { createWriteStream } from 'node:fs'
-import { extname, resolve } from 'node:path'
-import { pipeline } from 'node:stream'
-import { promisify } from 'node:util'
-const pump = promisify(pipeline)
+import { S3 } from 'aws-sdk'
+import { randomUUID } from 'crypto'
+import { extname } from 'path'
 
 export async function uploadRoutes(app: FastifyInstance) {
+  const s3 = new S3()
+
   app.post('/upload', async (req, res) => {
     const upload = await req.file({
       limits: {
@@ -19,36 +18,28 @@ export async function uploadRoutes(app: FastifyInstance) {
     const mimeTypeRegex = /^(image|video)\/[a-zA-Z]+/
     const isValidFileFormat = mimeTypeRegex.test(upload.mimetype)
 
-    if (!isValidFileFormat) res.status(400).send()
+    if (!isValidFileFormat) return res.status(400).send()
 
     const fileId = randomUUID()
-
     const extension = extname(upload.filename)
-
     const fileName = fileId.concat(extension)
 
-    const writeStream = await createWriteStream(
-      resolve(__dirname, '../../uploads/', fileName),
-    )
+    const params = {
+      Bucket: 'nlw-spacetime-project',
+      Key: fileName,
+      Body: upload.file,
+    }
 
-    await pump(upload.file, writeStream)
+    try {
+      await s3.upload(params).promise()
 
-    const fullUrl = req.protocol.concat('://').concat(req.hostname)
-    const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString()
-    console.log(fileName)
+      const fileUrl = `https://${params.Bucket}.s3.amazonaws.com/${params.Key}`
+      console.log(fileUrl)
 
-    return fileUrl
+      return { fileUrl }
+    } catch (error) {
+      console.error(error)
+      return res.status(500).send()
+    }
   })
-
-  // app.delete('/upload/:fileName', async (req, res) => {
-  //   const { fileName } = req.params
-
-  //   try {
-  //     await unlink(resolve(__dirname, '../../uploads/', fileName))
-  //     res.send('File deleted successfully')
-  //   } catch (error) {
-  //     console.error(error)
-  //     res.status(500).send('Unable to delete file')
-  //   }
-  // })
 }
