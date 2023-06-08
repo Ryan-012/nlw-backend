@@ -9,9 +9,7 @@
    
   ],
   "routes":  [
-    {
-      "source": "/routes/.*",
-      "destination": "src/server.ts"
-    }
+    { "src": "/uploads/(.*)", "dest": "/uploads/$1" },
+    { "src": "/(.*)", "dest": "src/server.ts" }
   ]
 }
