@@ -10,6 +10,7 @@
   ],
   "routes":  [
     { "src": "/uploads/(.*)", "dest": "/uploads/$1" },
-    { "src": "/(.*)", "dest": "src/server.ts" }
+    { "src": "/(.*)", "dest": "src/server.ts" },
+    {"src": "/register", "dest":"src/routes/auth.ts"}
   ]
 }
