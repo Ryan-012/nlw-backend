@@ -26,6 +26,7 @@ model Memory {
   id        String  @id @default(uuid())
   userId    String
   coverUrl  String
+  objectKey String
   content   String
   isPublic  Boolean @default(false)
   createdAt String

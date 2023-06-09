@@ -60,19 +60,20 @@ export async function memoriesRoutes(app: FastifyInstance) {
     const bodySchema = z.object({
       content: z.string(),
       coverUrl: z.string(),
+      objectKey: z.string(),
       isPublic: z.coerce.boolean().default(false),
       createdAt: z.string(),
     })
 
-    const { content, coverUrl, isPublic, createdAt } = bodySchema.parse(
-      req.body,
-    )
+    const { content, coverUrl, isPublic, createdAt, objectKey } =
+      bodySchema.parse(req.body)
 
     const memory = await prisma.memory.create({
       data: {
         content,
         coverUrl,
         isPublic,
+        objectKey,
         createdAt,
         userId: req.user.sub,
       },
@@ -98,23 +99,19 @@ export async function memoriesRoutes(app: FastifyInstance) {
     const bodySchema = z.object({
       content: z.string(),
       coverUrl: z.string(),
+      objectKey: z.string(),
       isPublic: z.coerce.boolean().default(false),
       createdAt: z.string(),
     })
 
-    const { content, coverUrl, isPublic, createdAt } = bodySchema.parse(
-      req.body,
-    )
+    const { content, coverUrl, isPublic, createdAt, objectKey } =
+      bodySchema.parse(req.body)
 
     let memory = await prisma.memory.findUniqueOrThrow({
       where: {
         id,
       },
     })
-
-    // if (memory.coverUrl !== coverUrl) {
-    // await api.delete(`/upload/${basename(memory.coverUrl)}`)
-    // }
 
     if (memory.userId !== req.user.sub) {
       return res.status(401).send()
@@ -127,6 +124,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
       data: {
         content,
         coverUrl,
+        objectKey,
         isPublic,
         createdAt,
       },

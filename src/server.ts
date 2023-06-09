@@ -22,7 +22,7 @@ app.register(require('@fastify/static'), {
 app.register(multipart)
 
 app.register(cors, {
-  origin: 'https://nlw-frontend-psi.vercel.app',
+  origin: ['http://localhost:3000', 'https://nlw-frontend-psi.vercel.app'],
 })
 app.register(jwt, {
   secret: 'process.env.SECRET_KEY',
@@ -32,12 +32,6 @@ app.register(authRoutes)
 app.register(memoriesRoutes)
 app.register(uploadRoutes)
 app.register(UserRoutes)
-app
-  .listen(process.env.PORT || 3333, '0.0.0.0')
-  .then((address) => {
-    console.log(`Server listening on ${address}`)
-  })
-  .catch((err) => {
-    console.error(err)
-    process.exit(1)
-  })
+app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
+  console.log('server running')
+})
