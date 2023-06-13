@@ -24,7 +24,6 @@ app.register(multipart)
 app.register(cors, {
   origin: [
     'http://localhost:3000',
-    'https://nlw-frontend-psi.vercel.app',
     'https://main.d3dn7d96quisvt.amplifyapp.com',
   ],
 })
