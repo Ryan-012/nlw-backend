@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "templateId": "server",
+  "templateId": "node",
   "templateVersion": "1.0.0",
   "start": {
     "web": "npm start"
