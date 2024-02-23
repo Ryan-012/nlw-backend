@@ -1,17 +1,4 @@
 {
   "schemaVersion": 2,
-  "templateId": "node/21.5.0",
-    "deployments": {
-      "app": {
-        "destinations": {
-          "prod": {
-            "branch": "main",
-            "context": "./",
-            "dockerRunArguments": ["-p", "3000:3000"],
-            "start": "node src/server.ts"
-          }
-        }
-      }
-    }
-  
+  "dockerfilePath": "./Dockerfile"
 }
