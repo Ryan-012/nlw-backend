@@ -4,5 +4,9 @@
   "templateVersion": "1.0.0",
   "start": {
     "web": "npm start"
+  },
+  "exposedPorts": [3000],
+  "envVars": {
+    "NODE_ENV": "production"
   }
 }
