@@ -1,3 +1,7 @@
- {
-
- }
+{
+  "schemaVersion": 2,
+  "templateId": "node",
+  "start": {
+    "web": "npm start"
+  }
+}
