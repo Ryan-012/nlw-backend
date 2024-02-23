@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "start": "tsx src/server.ts",
+    "start": "tsc && node dist/server.js",
     "lint": "eslint src --ext .ts --fix",
     "vercel-build": "npx prisma generate && npx prisma migrate deploy"
   },
@@ -19,7 +19,7 @@
     "eslint": "^8.41.0",
     "prisma": "^4.14.1",
     "tsx": "^3.12.7",
-    "typescript": "^5.0.4"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@fastify/cors": "^8.2.1",
