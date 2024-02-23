@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "start": "dotenv/config ts-node src/server.ts",
+    "start": "npx ts-node src/server.ts",
     "lint": "eslint src --ext .ts --fix",
     "vercel-build": "npx prisma generate && npx prisma migrate deploy"
   },
